@@ -1,0 +1,35 @@
+:root[data-theme="osaka-jade"] {
+  color-scheme: dark;
+
+  --accent: #509475;
+  --selection: #32473b;
+  --muted: #53685b;
+
+  --background: #111c18;
+  --dark-background: #0c1512;
+  --darker-background: #090f0d;
+  --lighter-background: #23372b;
+
+  --foreground: #c1c497;
+  --dark-foreground: #81b8a8;
+  --light-foreground: #d6d5bc;
+  --bright-foreground: #f7e8b2;
+
+  --red: #ff5345;
+  --yellow: #459451;
+  --orange: #a2734b;
+  --green: #549e6a;
+  --cyan: #2dd5b7;
+  --blue: #509475;
+  --magenta: #d2689c;
+  --brown: #513925;
+
+  --bright-red: #db9f9c;
+  --bright-yellow: #e5c736;
+  --bright-green: #63b07a;
+  --bright-cyan: #8cd3cb;
+  --bright-blue: #acd4cf;
+  --bright-magenta: #75bbb3;
+
+  --text-on-accent: #090f0d;
+}

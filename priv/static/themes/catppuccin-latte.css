@@ -1,0 +1,35 @@
+:root[data-theme="catppuccin-latte"] {
+  color-scheme: light;
+
+  --accent: #1e66f5;
+  --selection: #ccd0da;
+  --muted: #acb0be;
+
+  --background: #eff1f5;
+  --dark-background: #e3e4e8;
+  --darker-background: #d7d8dc;
+  --lighter-background: #dce0e8;
+
+  --foreground: #4c4f69;
+  --dark-foreground: #9ca0b0;
+  --light-foreground: #5c5f77;
+  --bright-foreground: #4c4f69;
+
+  --red: #d20f39;
+  --yellow: #df8e1d;
+  --orange: #d84e2b;
+  --green: #40a02b;
+  --cyan: #179299;
+  --blue: #1e66f5;
+  --magenta: #ea76cb;
+  --brown: #6c2715;
+
+  --bright-red: #d20f39;
+  --bright-yellow: #df8e1d;
+  --bright-green: #40a02b;
+  --bright-cyan: #179299;
+  --bright-blue: #1e66f5;
+  --bright-magenta: #ea76cb;
+
+  --text-on-accent: #d7d8dc;
+}

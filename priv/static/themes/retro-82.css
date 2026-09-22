@@ -1,0 +1,35 @@
+:root[data-theme="retro-82"] {
+  color-scheme: dark;
+
+  --accent: #faa968;
+  --selection: #134e5a;
+  --muted: #2a6b78;
+
+  --background: #05182e;
+  --dark-background: #031222;
+  --darker-background: #020c17;
+  --lighter-background: #0a2540;
+
+  --foreground: #f6dcac;
+  --dark-foreground: #3f8f8a;
+  --light-foreground: #a7c9c6;
+  --bright-foreground: #f6dcac;
+
+  --red: #f85525;
+  --yellow: #e97b3c;
+  --orange: #faa968;
+  --green: #028391;
+  --cyan: #8cbfb8;
+  --blue: #3f8f8a;
+  --magenta: #3f8f8a;
+  --brown: #743d1e;
+
+  --bright-red: #f85525;
+  --bright-yellow: #e97b3c;
+  --bright-green: #028391;
+  --bright-cyan: #8cbfb8;
+  --bright-blue: #faa968;
+  --bright-magenta: #3f8f8a;
+
+  --text-on-accent: #020c17;
+}

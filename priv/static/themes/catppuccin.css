@@ -1,0 +1,35 @@
+:root[data-theme="catppuccin"] {
+  color-scheme: dark;
+
+  --accent: #89b4fa;
+  --selection: #45475a;
+  --muted: #585b70;
+
+  --background: #1e1e2e;
+  --dark-background: #161622;
+  --darker-background: #101019;
+  --lighter-background: #313244;
+
+  --foreground: #cdd6f4;
+  --dark-foreground: #6c7086;
+  --light-foreground: #bac2de;
+  --bright-foreground: #cdd6f4;
+
+  --red: #f38ba8;
+  --yellow: #f9e2af;
+  --orange: #f6b6ab;
+  --green: #a6e3a1;
+  --cyan: #94e2d5;
+  --blue: #89b4fa;
+  --magenta: #f5c2e7;
+  --brown: #7b5b55;
+
+  --bright-red: #f38ba8;
+  --bright-yellow: #f9e2af;
+  --bright-green: #a6e3a1;
+  --bright-cyan: #94e2d5;
+  --bright-blue: #89b4fa;
+  --bright-magenta: #f5c2e7;
+
+  --text-on-accent: #101019;
+}

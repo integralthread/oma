@@ -1,0 +1,35 @@
+:root[data-theme="everforest"] {
+  color-scheme: dark;
+
+  --accent: #7fbbb3;
+  --selection: #3d484d;
+  --muted: #475258;
+
+  --background: #2d353b;
+  --dark-background: #21272c;
+  --darker-background: #181d20;
+  --lighter-background: #343f44;
+
+  --foreground: #d3c6aa;
+  --dark-foreground: #4f585e;
+  --light-foreground: #9da9a0;
+  --bright-foreground: #d3c6aa;
+
+  --red: #e67e80;
+  --yellow: #dbbc7f;
+  --orange: #e09d7f;
+  --green: #a7c080;
+  --cyan: #83c092;
+  --blue: #7fbbb3;
+  --magenta: #d699b6;
+  --brown: #704e3f;
+
+  --bright-red: #e67e80;
+  --bright-yellow: #dbbc7f;
+  --bright-green: #a7c080;
+  --bright-cyan: #83c092;
+  --bright-blue: #7fbbb3;
+  --bright-magenta: #d699b6;
+
+  --text-on-accent: #181d20;
+}

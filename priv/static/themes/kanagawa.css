@@ -1,0 +1,35 @@
+:root[data-theme="kanagawa"] {
+  color-scheme: dark;
+
+  --accent: #dcd7ba;
+  --selection: #363646;
+  --muted: #54546d;
+
+  --background: #1f1f28;
+  --dark-background: #17171e;
+  --darker-background: #111116;
+  --lighter-background: #223249;
+
+  --foreground: #dcd7ba;
+  --dark-foreground: #727169;
+  --light-foreground: #c8c093;
+  --bright-foreground: #dcd7ba;
+
+  --red: #c34043;
+  --yellow: #c0a36e;
+  --orange: #c17158;
+  --green: #76946a;
+  --cyan: #6a9589;
+  --blue: #7e9cd8;
+  --magenta: #957fb8;
+  --brown: #60382c;
+
+  --bright-red: #e82424;
+  --bright-yellow: #e6c384;
+  --bright-green: #98bb6c;
+  --bright-cyan: #7aa89f;
+  --bright-blue: #7fb4ca;
+  --bright-magenta: #938aa9;
+
+  --text-on-accent: #111116;
+}

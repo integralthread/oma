@@ -1,0 +1,35 @@
+:root[data-theme="nord"] {
+  color-scheme: dark;
+
+  --accent: #81a1c1;
+  --selection: #434c5e;
+  --muted: #4c566a;
+
+  --background: #2e3440;
+  --dark-background: #222730;
+  --darker-background: #191c23;
+  --lighter-background: #3b4252;
+
+  --foreground: #d8dee9;
+  --dark-foreground: #667080;
+  --light-foreground: #adb5c4;
+  --bright-foreground: #d8dee9;
+
+  --red: #bf616a;
+  --yellow: #ebcb8b;
+  --orange: #d5967a;
+  --green: #a3be8c;
+  --cyan: #88c0d0;
+  --blue: #81a1c1;
+  --magenta: #b48ead;
+  --brown: #6a4b3d;
+
+  --bright-red: #bf616a;
+  --bright-yellow: #ebcb8b;
+  --bright-green: #a3be8c;
+  --bright-cyan: #8fbcbb;
+  --bright-blue: #81a1c1;
+  --bright-magenta: #b48ead;
+
+  --text-on-accent: #191c23;
+}

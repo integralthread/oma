@@ -1,0 +1,35 @@
+:root[data-theme="lumon"] {
+  color-scheme: dark;
+
+  --accent: #8bc9eb;
+  --selection: #243d56;
+  --muted: #304860;
+
+  --background: #16242d;
+  --dark-background: #101b21;
+  --darker-background: #0b1216;
+  --lighter-background: #1b2d40;
+
+  --foreground: #d6e2ee;
+  --dark-foreground: #4d86b0;
+  --light-foreground: #d6e2ee;
+  --bright-foreground: #f2fcff;
+
+  --red: #4d86b0;
+  --yellow: #6fa4c9;
+  --orange: #8bc9eb;
+  --green: #5e95bc;
+  --cyan: #b4e4f6;
+  --blue: #6fb8e3;
+  --magenta: #8bc9eb;
+  --brown: #456475;
+
+  --bright-red: #73a6cb;
+  --bright-yellow: #9dcae5;
+  --bright-green: #86b7d8;
+  --bright-cyan: #d1eef8;
+  --bright-blue: #f2fcff;
+  --bright-magenta: #b1d8ee;
+
+  --text-on-accent: #0b1216;
+}

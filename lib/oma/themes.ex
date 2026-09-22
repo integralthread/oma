@@ -65,6 +65,23 @@ defmodule Oma.Themes do
   def community, do: tier(:community)
   def extra, do: tier(:extra)
 
+  @doc """
+  Filter palettes for the generator and checker.
+
+  Options: `:tiers` (list of tier atoms, default all), `:complete_only`
+  (default `false`), `:names` (explicit list, default all).
+  """
+  @spec select(keyword) :: [Palette.t()]
+  def select(opts \\ []) do
+    tiers = Keyword.get(opts, :tiers, @tiers)
+    names = Keyword.get(opts, :names)
+
+    @palettes
+    |> Enum.filter(&(&1.tier in tiers))
+    |> Enum.filter(&(not Keyword.get(opts, :complete_only, false) or &1.complete?))
+    |> Enum.filter(&(is_nil(names) or &1.name in names))
+  end
+
   @doc "Palettes whose author defined all 24 schema keys."
   @spec complete() :: [Palette.t()]
   def complete, do: Enum.filter(@palettes, & &1.complete?)

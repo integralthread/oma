@@ -1,0 +1,35 @@
+:root[data-theme="last-horizon"] {
+  color-scheme: dark;
+
+  --accent: #b59790;
+  --selection: #584e51;
+  --muted: #584e51;
+
+  --background: #0c0b0c;
+  --dark-background: #090809;
+  --darker-background: #060606;
+  --lighter-background: #0c0b0c;
+
+  --foreground: #fafcfb;
+  --dark-foreground: #584e51;
+  --light-foreground: #cfd3cd;
+  --bright-foreground: #e2dddc;
+
+  --red: #c38b7b;
+  --yellow: #6b5e73;
+  --orange: #6b5e73;
+  --green: #87a9b0;
+  --cyan: #a5a0b6;
+  --blue: #b59790;
+  --magenta: #c4d8e2;
+  --brown: #362f3a;
+
+  --bright-red: #c38b7b;
+  --bright-yellow: #6b5e73;
+  --bright-green: #87a9b0;
+  --bright-cyan: #a5a0b6;
+  --bright-blue: #b59790;
+  --bright-magenta: #c4d8e2;
+
+  --text-on-accent: #060606;
+}

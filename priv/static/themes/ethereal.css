@@ -1,0 +1,35 @@
+:root[data-theme="ethereal"] {
+  color-scheme: dark;
+
+  --accent: #7d82d9;
+  --selection: #252e56;
+  --muted: #6d7db6;
+
+  --background: #060b1e;
+  --dark-background: #040816;
+  --darker-background: #030610;
+  --lighter-background: #131a3a;
+
+  --foreground: #ffcead;
+  --dark-foreground: #6d7db6;
+  --light-foreground: #c9b8a6;
+  --bright-foreground: #ffcead;
+
+  --red: #ed5b5a;
+  --yellow: #e9bb4f;
+  --orange: #eb8b54;
+  --green: #92a593;
+  --cyan: #a3bfd1;
+  --blue: #7d82d9;
+  --magenta: #c89dc1;
+  --brown: #75452a;
+
+  --bright-red: #faaaa9;
+  --bright-yellow: #f7dc9c;
+  --bright-green: #c4cfc4;
+  --bright-cyan: #dfeaf0;
+  --bright-blue: #c2c4f0;
+  --bright-magenta: #ead7e7;
+
+  --text-on-accent: #030610;
+}
