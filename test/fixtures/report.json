@@ -1,0 +1,31 @@
+{
+  "generated_at": "2026-09-22T05:09:28.129Z",
+  "counts": {
+    "ok": 154,
+    "last-good": 0,
+    "excluded": 35,
+    "hidden": 0,
+    "missing": 2
+  },
+  "problems": [
+    {
+      "slug": "all-hallows-eve",
+      "status": "excluded",
+      "reason": "validation",
+      "errors": [
+        "PREVIEW_MISSING: No preview.png at the repository root. Omarchy shows this file in its theme switcher, so add a 16:9 screenshot of the theme on a real desktop as preview.png.",
+        "PREVIEW_UNRENDERABLE: No preview could be rendered."
+      ]
+    },
+    {
+      "slug": "amberbyte",
+      "status": "excluded",
+      "reason": "validation",
+      "errors": [
+        "PREVIEW_MISSING: No preview.png at the repository root. Omarchy shows this file in its theme switcher, so add a 16:9 screenshot of the theme on a real desktop as preview.png.",
+        "PREVIEW_UNRENDERABLE: No preview could be rendered."
+      ]
+    }
+  ],
+  "warnings": {}
+}

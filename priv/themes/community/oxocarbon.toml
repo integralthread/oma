@@ -1,0 +1,21 @@
+accent = "#33b1ff"
+
+background = "#161616"
+
+foreground = "#f2f4f8"
+dark_foreground = "#525252"
+bright_foreground = "#08bdba"
+
+red = "#3ddbd9"
+yellow = "#ee5396"
+green = "#33b1ff"
+cyan = "#ff7eb6"
+blue = "#42be65"
+magenta = "#be95ff"
+
+bright_red = "#78a9ff"
+bright_yellow = "#be95ff"
+bright_green = "#ff7eb6"
+bright_cyan = "#82cfff"
+bright_blue = "#dde1e6"
+bright_magenta = "#ffffff"
