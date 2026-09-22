@@ -4,10 +4,11 @@ defmodule Oma.CSS do
   the file system. `mix oma.gen` assembles files from these pieces, and a
   Phoenix app can call them directly to inline a theme.
 
-  The contract follows `notes/PHX.md`: one custom property per schema key
-  scoped by `data-theme` on `<html>`, a semantic role layer defined once
-  per app, a Tailwind v4 `@theme` block that exposes the roles as
-  utilities, and an optional daisyUI theme block per palette.
+  The contract: one custom property per schema key scoped by `data-theme`
+  on `<html>` (underscores become hyphens, `mode` becomes `color-scheme`),
+  a semantic role layer defined once per app, a Tailwind v4 `@theme` block
+  that exposes the roles as utilities, and an optional daisyUI theme block
+  per palette.
   """
 
   alias Oma.Color

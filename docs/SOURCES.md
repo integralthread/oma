@@ -92,7 +92,7 @@ Facts that matter for Oma:
    script, templates and tests, so keep `--omarchy DIR` for that.
 2. Do not bootstrap 190 theme repos. Pull `catalog.json` in `mix oma.sync`,
    verify `catalog.json.sha256`, and treat each entry's `colors` as raw
-   palette input through the same `Oma.Palette.derive/1` path a file takes.
+   palette input through the same `Oma.Palette.from_raw/2` path a file takes.
    One code path for files and catalog entries.
 3. Vendor the result: `priv/themes/builtin/<name>.toml` copied from the
    checkout, `priv/themes/community/<slug>.toml` written from the catalog
@@ -100,7 +100,7 @@ Facts that matter for Oma:
    `generated_at` and the omarchy commit. Keep per-theme metadata (`repo`,
    `commit`, `mode`, `hue`, `warnings`, `preview.thumb`) in a small JSON
    index for pickers.
-4. Change the validation contract in `PLAN.md`: 9 hard-required keys as
+4. Validation contract (`Oma.Palette`): 9 hard-required keys as
    the registry defines, derivation for the rest, and a `complete?` flag so
    an app can offer only fully specified palettes if it wants.
 5. Make the CDN base URL a task option with the r2.dev URL as today's

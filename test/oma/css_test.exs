@@ -5,7 +5,7 @@ defmodule Oma.CSSTest do
   alias Oma.Themes
 
   describe "variables/2" do
-    test "tokyo-night matches the golden file and the values in PHX.md" do
+    test "tokyo-night matches the golden file" do
       css = CSS.variables(Themes.get!("tokyo-night"))
       assert css == File.read!("test/fixtures/tokyo-night.css")
 

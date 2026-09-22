@@ -1,8 +1,10 @@
 defmodule Oma.Contrast do
   @moduledoc """
-  WCAG contrast checks for the colour pairs a web app actually relies on
-  (`notes/PHX.md` section 7). The schema guarantees shape, not legibility;
-  this is how a theme that fails shows up before it ships.
+  WCAG contrast checks for the colour pairs a web app actually relies on:
+  body and secondary text on the page and on a raised surface, button text
+  on `accent`, and the status hues on the page. The schema guarantees
+  shape, not legibility; this is how a theme that fails shows up before it
+  ships.
   """
 
   alias Oma.Color

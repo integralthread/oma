@@ -55,10 +55,11 @@ sync came from. `priv/themes/index.json` is the picker metadata, one line
 per theme. `priv/themes/contrast_exceptions.txt` lists known contrast
 failures.
 
-## Notes
+## Documentation
 
-- `notes/SCHEMA.md` the `colors.toml` contract as the built-ins ship it
-- `notes/SOURCES.md` how Omarchy distributes themes and where the data comes from
-- `notes/PHX.md` the CSS contract this library renders
-- `notes/PLAN.md` the build plan and decisions
-- `notes/CONTRAST.md` the generated contrast report
+`mix docs` builds the API reference into `doc/`, with these pages alongside
+the modules:
+
+- `docs/SCHEMA.md` the `colors.toml` contract as the built-ins ship it
+- `docs/SOURCES.md` how Omarchy distributes themes and where the data comes from
+- `docs/CONTRAST.md` the generated contrast report
