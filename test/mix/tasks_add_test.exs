@@ -90,7 +90,9 @@ defmodule Mix.Tasks.Oma.AddTest do
       Mix.Tasks.Oma.Add.run(["--local", dir, "--name", "Bad", "--priv", priv])
     end
 
-    assert_raise Mix.Error, ~r/git option/, fn ->
+    # anything starting with - is an unknown switch to OptionParser, so a
+    # URL that spells a git option never reaches the clone
+    assert_raise Mix.Error, ~r/unknown options/, fn ->
       Mix.Tasks.Oma.Add.run(["--upload-pack=x", "--priv", priv])
     end
 
