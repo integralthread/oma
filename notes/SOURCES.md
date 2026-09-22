@@ -86,9 +86,10 @@ Facts that matter for Oma:
 
 ## Recommendation for Oma
 
-1. Keep the `omarchy` bootstrap checkout. It is the source for the 22
-   built-ins, the derivation script we mirror, and the templates and tests
-   worth reading. It should not be the only source.
+1. Do not require the `omarchy` checkout. It is over 300 MB for 22 small
+   files; fetch `themes/<name>/colors.toml` by path at a pinned commit
+   (`Oma.Omarchy`). A clone is still worth having to read the derivation
+   script, templates and tests, so keep `--omarchy DIR` for that.
 2. Do not bootstrap 190 theme repos. Pull `catalog.json` in `mix oma.sync`,
    verify `catalog.json.sha256`, and treat each entry's `colors` as raw
    palette input through the same `Oma.Palette.derive/1` path a file takes.

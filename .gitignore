@@ -1,4 +1,4 @@
-# Local repositories managed by mise bootstrap.
+# Optional local Omarchy clone for `mix oma.sync --omarchy omarchy`.
 /omarchy/
 
 # The directory Mix will write compiled artifacts to.

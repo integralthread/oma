@@ -1,13 +1,15 @@
 defmodule Mix.Tasks.Oma.Sync do
-  @shortdoc "Refresh priv/themes from the omarchy checkout and the registry catalog"
+  @shortdoc "Refresh priv/themes from upstream omarchy and the registry catalog"
 
   @moduledoc """
   Vendors palettes into `priv/themes/`:
 
-      mix oma.sync [--omarchy DIR] [--catalog BASE_URL] [--no-community] [--no-builtin]
+      mix oma.sync [--omarchy DIR | --ref REF] [--catalog BASE_URL] [--no-community] [--no-builtin]
 
-  * `builtin/<name>.toml` is copied from `DIR/themes/<name>/colors.toml`
-    (default `./omarchy`, the mise bootstrap checkout).
+  * `builtin/<name>.toml` is `themes/<name>/colors.toml` from
+    `omacom/omarchy`, fetched file by file over HTTPS (see `Oma.Omarchy`);
+    no clone is needed. `--ref` picks a branch, tag or commit. `--omarchy
+    DIR` reads a local checkout instead.
   * `community/<slug>.toml` is written from the registry catalog's raw
     colours, in the same flat format.
   * `extra/` is left alone; `mix oma.add` manages it.
@@ -20,10 +22,17 @@ defmodule Mix.Tasks.Oma.Sync do
   use Mix.Task
 
   alias Oma.Catalog
+  alias Oma.Omarchy
   alias Oma.Palette
   alias Oma.Palette.Parser
 
-  @switches [omarchy: :string, catalog: :string, community: :boolean, builtin: :boolean]
+  @switches [
+    omarchy: :string,
+    ref: :string,
+    catalog: :string,
+    community: :boolean,
+    builtin: :boolean
+  ]
 
   @impl true
   def run(args) do
@@ -38,7 +47,7 @@ defmodule Mix.Tasks.Oma.Sync do
 
     {builtin_meta, sources} =
       if Keyword.get(opts, :builtin, true),
-        do: sync_builtin(priv, Keyword.get(opts, :omarchy, "omarchy"), sources),
+        do: sync_builtin(priv, opts, sources),
         else: {keep(index, "builtin"), sources}
 
     {community_meta, sources} =
@@ -55,28 +64,23 @@ defmodule Mix.Tasks.Oma.Sync do
 
   # -- built-in ----------------------------------------------------------------
 
-  defp sync_builtin(priv, dir, sources) do
-    themes_dir = Path.join(dir, "themes")
+  defp sync_builtin(priv, opts, sources) do
+    upstream =
+      case {opts[:omarchy], opts[:ref]} do
+        {nil, ref} -> fetch_upstream(if(ref, do: [ref: ref], else: []))
+        {dir, nil} -> local_upstream(dir)
+        {_, _} -> Mix.raise("--omarchy and --ref are exclusive")
+      end
 
-    unless File.dir?(themes_dir) do
-      Mix.raise("""
-      no omarchy checkout at #{dir}/themes.
-      Run `mise bootstrap repos apply` (or pass --omarchy DIR, or --no-builtin).
-      """)
-    end
+    Mix.shell().info(
+      "omarchy: #{map_size(upstream.themes)} built-in themes at #{String.slice(upstream.commit, 0, 12)}"
+    )
 
     out = Path.join(priv, "builtin")
     File.mkdir_p!(out)
 
     meta =
-      themes_dir
-      |> Path.join("*/colors.toml")
-      |> Path.wildcard()
-      |> Enum.sort()
-      |> Map.new(fn path ->
-        name = path |> Path.dirname() |> Path.basename()
-        content = builtin_content(path)
-
+      Map.new(upstream.themes, fn {name, content} ->
         palette =
           case Palette.from_toml(content, name: name, tier: :builtin) do
             {:ok, p} -> p
@@ -89,8 +93,9 @@ defmodule Mix.Tasks.Oma.Sync do
          %{
            "tier" => "builtin",
            "name" => Oma.Slug.display(name),
-           "repo" => "https://github.com/omacom/omarchy",
+           "repo" => Omarchy.repo_url(),
            "path" => "themes/" <> name,
+           "commit" => upstream.commit,
            "mode" => Atom.to_string(palette.mode),
            "hue" => Atom.to_string(Oma.Color.hue_bucket(palette.accent)),
            "complete" => palette.complete?
@@ -98,27 +103,40 @@ defmodule Mix.Tasks.Oma.Sync do
       end)
 
     prune(out, Map.keys(meta))
-    commit = git(dir, ~w(rev-parse HEAD))
-
-    meta = Map.new(meta, fn {k, v} -> {k, Map.put(v, "commit", commit)} end)
 
     {meta,
      Map.merge(sources, %{
-       "omarchy_repo" => "https://github.com/omacom/omarchy",
-       "omarchy_commit" => commit
+       "omarchy_repo" => Omarchy.repo_url(),
+       "omarchy_commit" => upstream.commit
      })}
   end
 
-  # Verbatim, except that a light.mode marker with no mode key becomes an
-  # explicit `mode = "light"` so the vendored file stands alone.
-  defp builtin_content(path) do
-    content = File.read!(path)
-    marker = path |> Path.dirname() |> Path.join("light.mode") |> File.exists?()
+  defp fetch_upstream(opts) do
+    case Omarchy.fetch(opts) do
+      {:ok, upstream} ->
+        upstream
 
-    if marker and not Map.has_key?(Parser.parse(content), "mode") do
-      ~s(mode = "light"\n\n) <> content
-    else
-      content
+      {:error, {:rate_limited, url}} ->
+        Mix.raise("""
+        GitHub refused #{url} (rate limit?).
+        Set GITHUB_TOKEN, wait, or pass --omarchy DIR to read a local checkout.
+        """)
+
+      {:error, reason} ->
+        Mix.raise("could not fetch the omarchy built-ins: #{inspect(reason)}")
+    end
+  end
+
+  defp local_upstream(dir) do
+    case Omarchy.from_dir(dir) do
+      {:ok, upstream} ->
+        upstream
+
+      {:error, {:no_themes_dir, themes_dir}} ->
+        Mix.raise("no omarchy checkout at #{themes_dir}")
+
+      {:error, reason} ->
+        Mix.raise("could not read the omarchy checkout at #{dir}: #{inspect(reason)}")
     end
   end
 
@@ -253,13 +271,6 @@ defmodule Mix.Tasks.Oma.Sync do
     |> Path.wildcard()
     |> Enum.reject(&(Path.basename(&1, ".toml") in keep_names))
     |> Enum.each(&File.rm!/1)
-  end
-
-  defp git(dir, args) do
-    case System.cmd("git", ["-C", dir | args], stderr_to_stdout: true) do
-      {out, 0} -> String.trim(out)
-      {out, _} -> Mix.raise("git #{Enum.join(args, " ")} failed in #{dir}: #{out}")
-    end
   end
 
   defp snapshot(priv) do

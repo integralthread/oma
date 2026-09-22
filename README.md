@@ -40,13 +40,16 @@ consumers who do not want to run the generator.
 ## Maintain the vendored themes
 
 ```sh
-mise bootstrap repos apply          # clone ./omarchy (once)
-mix oma.sync                        # refresh priv/themes from the checkout and the catalog
+mix oma.sync                        # refresh priv/themes from upstream omarchy and the catalog
 mix oma.add <git-url>               # vendor an unlisted theme into priv/themes/extra
 mix oma.check                       # WCAG contrast report; fails on new failures
 mix oma.gen --out priv/static/themes --tier builtin
 ```
 
+The built-ins come straight from `omacom/omarchy` over HTTPS: two GitHub
+API calls to pin the commit and list the tree, then one small file per
+theme, instead of a clone that is over 300 MB. Set `GITHUB_TOKEN` if the
+anonymous API limit bites, or pass `--omarchy DIR` to read a local clone.
 `priv/themes/SOURCES` records the omarchy commit and catalog timestamp a
 sync came from. `priv/themes/index.json` is the picker metadata, one line
 per theme. `priv/themes/contrast_exceptions.txt` lists known contrast

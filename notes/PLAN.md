@@ -22,7 +22,7 @@ Three tiers, matching how the OS itself finds themes (see `SOURCES.md`):
 
 | Tier | Read from | Fetched by |
 |------|-----------|------------|
-| Built-in | `./omarchy/themes/*/colors.toml`, the bootstrap checkout | `mise bootstrap repos apply` |
+| Built-in | `themes/*/colors.toml` in `omacom/omarchy` | `mix oma.sync` over HTTPS, file by file (`Oma.Omarchy`) |
 | Listed community | `catalog.json` published by `omacom/omarchy-theme-registry` | `mix oma.sync` over HTTPS |
 | Unlisted | any git repo laid out like an Omarchy theme | `mix oma.add <git-url>` |
 
@@ -30,7 +30,7 @@ None of these is committed. What is committed is the vendored result:
 
 ```
 priv/themes/
-  builtin/<name>.toml        copied verbatim from the checkout
+  builtin/<name>.toml        copied verbatim from upstream
   community/<slug>.toml      written from catalog `colors`, same flat format
   extra/<slug>.toml          added by hand with mix oma.add
   index.json                 per-theme metadata for pickers (below)
@@ -83,7 +83,8 @@ same theme.
 | `Oma.Themes` | Compile-time index of `priv/themes`. `all/0`, `builtin/0`, `community/0`, `complete/0`, `get!/1`, `valid?/1`, `light/0`, `dark/0`, `meta/1`. Recompiles via `@external_resource` on the TOML files and `index.json`. |
 | `Oma.CSS` | Pure renderers returning iodata. `variables/1` emits the `:root[data-theme="name"]` block with `color-scheme` and one `--key` per schema colour, underscores to hyphens, `hyprland_*` and `active_*` dropped. `semantic_layer/0`, `tailwind_theme/0`, `daisyui/1` (table in `PHX.md` section 3, `-content` picked by luminance), `index/1`. |
 | `Oma.Contrast` | Runs the pair table from `PHX.md` section 7 and returns `{pair, ratio, minimum}` failures. |
-| `Mix.Tasks.Oma.Sync` | `mix oma.sync [--omarchy DIR] [--catalog URL] [--no-community]` refreshes `builtin/` from the checkout and `community/` from the catalog, rewrites `index.json` and `SOURCES`, prints added, removed and changed themes. Falls back to the marketplace repo's committed `data/catalog.json` when the CDN fails. |
+| `Oma.Omarchy` | The built-ins without a clone: resolve the branch to a commit and list its tree with two GitHub API calls, then read each `themes/<name>/colors.toml` from `raw.githubusercontent.com` at that commit. `from_dir/1` reads a local checkout instead. |
+| `Mix.Tasks.Oma.Sync` | `mix oma.sync [--omarchy DIR \| --ref REF] [--catalog URL] [--no-community]` refreshes `builtin/` from upstream and `community/` from the catalog, rewrites `index.json` and `SOURCES`, prints added, removed and changed themes. Falls back to the marketplace repo's committed `data/catalog.json` when the CDN fails. |
 | `Mix.Tasks.Oma.Add` | `mix oma.add <git-url>` does what `omarchy theme install` does: derive the slug from the repo name, shallow-clone to a temp dir, read `colors.toml` or derive from `alacritty.toml`, write `extra/<slug>.toml` and an index entry. |
 | `Mix.Tasks.Oma.Gen` | `mix oma.gen --out DIR [--tier builtin,community,extra] [--complete-only] [--daisyui] [--semantic] [--tailwind]` writes `<name>.css` per theme plus `index.css`. |
 | `Mix.Tasks.Oma.Check` | `mix oma.check [--tier ...]` prints the contrast report and exits non-zero on failures outside the known-exceptions list. |
@@ -153,6 +154,11 @@ Each milestone ends with `mix test` green and is a natural commit.
 - **Vendor the palettes, not just the CSS.** Compile-time palette access
   for emails and PDFs needs raw values; committing `priv/themes/` gives
   that and makes generation reproducible without checkout or network.
+- **No omarchy clone either.** The checkout is over 300 MB, 244 MB of it
+  history and most of the rest background images, for 22 files under 1 KB
+  each. The catalog cannot supply the built-ins (the registry reserves
+  their names), so `Oma.Omarchy` fetches them by path at a pinned commit.
+  A local clone remains an option (`--omarchy DIR`) for offline work.
 - **Catalog, not clones, for community themes.** One GET replaces 190
   clones, and the catalog is exactly what Omarchy users see. The `commit`
   field pins the validated revision if a raw `colors.toml` is ever needed.

@@ -5,13 +5,25 @@ defmodule Oma.HTTP do
   `deps/` directory as well as from this repository.
   """
 
-  @doc "GET a URL and return the body on a 200."
+  @doc """
+  GET a URL and return the body on a 200.
+
+  Options: `:headers` (a list of `{name, value}` strings, added to the
+  defaults; a caller's `accept` replaces the default), `:timeout`,
+  `:connect_timeout`.
+  """
   @spec get(String.t(), keyword) :: {:ok, binary} | {:error, term}
   def get(url, opts \\ []) do
     {:ok, _} = Application.ensure_all_started(:inets)
     {:ok, _} = Application.ensure_all_started(:ssl)
 
-    headers = [{~c"user-agent", ~c"oma (Elixir httpc)"}, {~c"accept", ~c"*/*"}]
+    extra = for {k, v} <- Keyword.get(opts, :headers, []), do: {String.downcase(k), v}
+
+    headers =
+      [{"user-agent", "oma (Elixir httpc)"}, {"accept", "*/*"}]
+      |> Enum.reject(fn {k, _} -> List.keymember?(extra, k, 0) end)
+      |> Kernel.++(extra)
+      |> Enum.map(fn {k, v} -> {String.to_charlist(k), String.to_charlist(v)} end)
 
     http_opts = [
       ssl: [

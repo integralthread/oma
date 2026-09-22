@@ -1,10 +1,9 @@
 # Oma — toolchain and environment.
 # Erlang/Elixir are pinned to match the other ex/* repositories in arca.
 
-# Upstream Omarchy checkout; its themes/*/colors.toml files are the source of
-# truth for generated themes. Cloned by `mise bootstrap repos` into ./omarchy/.
-[bootstrap.repos]
-omarchy = { url = "git@github.com:omacom/omarchy.git" }
+# The Omarchy built-ins are fetched file by file by `mix oma.sync` (see
+# Oma.Omarchy); no checkout is needed. `mix oma.sync --omarchy DIR` reads a
+# local clone instead, for offline work.
 
 [tools]
 erlang = "29.0.6"
