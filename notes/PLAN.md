@@ -171,10 +171,24 @@ Each milestone ends with `mix test` green and is a natural commit.
 - **Theme names follow the upstream slug rule.** `[a-z0-9_][a-z0-9._+-]*`,
   lowercased; built-in names are reserved and a community or extra theme
   may not shadow one, exactly as the registry enforces.
+- **Contrast failures are grandfathered, not fixed.** The first run of
+  `mix oma.check` found 117 failing pairs in 82 of 176 themes, 13 of them
+  built-ins (`dark_foreground` on `background` accounts for 65). All of
+  them are listed in `priv/themes/contrast_exceptions.txt` with their
+  ratios, so the check passes today and fails only on a new failure. The
+  full table is `notes/CONTRAST.md`. Every theme file also emits
+  `--text-on-accent`, the ramp end that contrasts best with `accent`, so
+  the 13 `background`-on-`accent` failures have a legible alternative.
 - **Excluded registry themes stay out.** Missing previews are the
   registry's gate, not ours, but shipping what the gallery does not show
   would confuse anyone comparing. `report.json` is summarised in the sync
   output so exclusions are visible.
+
+## Status
+
+Milestones 1 to 8 are implemented and tested (`mix test`, 70+ tests).
+Milestone 9, the consumer walkthrough, needs a Phoenix app under `ex/`
+and has not been run.
 
 ## Open questions
 
